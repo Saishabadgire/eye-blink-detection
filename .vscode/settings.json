@@ -1,0 +1,15 @@
+{
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}/eye_blink_detection"
+  ],
+  "python.testing.unittestArgs": [
+    "-v",
+    "-s",
+    "./eye_blink_detection/tests",
+    "-p",
+    "test_*.py"
+  ],
+  "python.testing.unittestEnabled": true,
+  "python.testing.pytestEnabled": false,
+  "python-envs.defaultEnvManager": "ms-python.python:system"
+}

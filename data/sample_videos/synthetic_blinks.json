@@ -1,0 +1,11 @@
+{
+  "video_path": "data\\sample_videos\\synthetic_blinks.mp4",
+  "duration_sec": 10.0,
+  "fps": 30,
+  "blink_timestamps": [
+    2.0,
+    4.0,
+    6.0
+  ],
+  "prolonged_closure_start": 7.5
+}

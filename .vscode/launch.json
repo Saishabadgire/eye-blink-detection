@@ -1,0 +1,51 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "👁️ Run Live Webcam Detection",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/eye_blink_detection/main.py",
+      "args": ["--source", "0"],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/eye_blink_detection"
+    },
+    {
+      "name": "🌐 Run Streamlit Dashboard",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "streamlit",
+      "args": ["run", "app_streamlit.py"],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/eye_blink_detection"
+    },
+    {
+      "name": "🎬 Generate & Test Synthetic Video",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/eye_blink_detection/tests/generate_test_video.py",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/eye_blink_detection"
+    },
+    {
+      "name": "📊 Run Benchmark Evaluation",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/eye_blink_detection/evaluate.py",
+      "args": [
+        "--video", "data/sample_videos/synthetic_blinks.mp4",
+        "--save-plot"
+      ],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/eye_blink_detection"
+    },
+    {
+      "name": "🧪 Run Unit Tests",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/eye_blink_detection/tests/test_ear.py",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/eye_blink_detection"
+    }
+  ]
+}
