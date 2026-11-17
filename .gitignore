@@ -1,0 +1,19 @@
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environment
+venv/
+.venv/
+env/
+
+# Personal session logs
+data/logs/*.csv
+!data/logs/.gitkeep
+
+# OS generated
+Thumbs.db
+Desktop.ini
+.DS_Store
