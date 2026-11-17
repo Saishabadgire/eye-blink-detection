@@ -54,13 +54,20 @@ class FaceMeshDetector:
         if self.backend == "OpenCV-Haar":
             self._init_mediapipe_legacy(max_num_faces, refine_landmarks, min_detection_confidence, min_tracking_confidence)
 
-        # 3. Pre-load Haar cascades for extreme fallback
-        self.face_cascade = cv2.CascadeClassifier(
-            cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
-        )
-        self.eye_cascade = cv2.CascadeClassifier(
-            cv2.data.haarcascades + "haarcascade_eye.xml"
-        )
+        # 3. Pre-load Haar cascades only if needed as fallback
+        self.face_cascade = None
+        self.eye_cascade = None
+        if self.backend == "OpenCV-Haar":
+            try:
+                if hasattr(cv2, "CascadeClassifier") and hasattr(cv2, "data"):
+                    self.face_cascade = cv2.CascadeClassifier(
+                        cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+                    )
+                    self.eye_cascade = cv2.CascadeClassifier(
+                        cv2.data.haarcascades + "haarcascade_eye.xml"
+                    )
+            except Exception:
+                pass
 
     def _ensure_model_file(self) -> Path | None:
         """Locates or downloads the face_landmarker.task model file."""
@@ -229,6 +236,18 @@ class FaceMeshDetector:
 
     def _process_haar_fallback(self, frame: np.ndarray, h: int, w: int) -> FaceDetectionResult:
         """Fallback detector when MediaPipe is unavailable."""
+        if self.face_cascade is None or self.eye_cascade is None:
+            return FaceDetectionResult(
+                face_detected=False,
+                left_eye_pts=None,
+                right_eye_pts=None,
+                left_contour_pts=None,
+                right_contour_pts=None,
+                face_bbox=None,
+                all_landmarks=None,
+                backend="OpenCV-Haar",
+            )
+
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         faces = self.face_cascade.detectMultiScale(gray, scaleFactor=1.2, minNeighbors=5, minSize=(80, 80))
 
